@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-test-app
+  namespace: nadund-test
+  labels:
+    app: python-test
+spec:
+  selector:
+    app: python-test
+  ports:
+    - protocol: TCP
+      port: 9090
+      targetPort: 8080

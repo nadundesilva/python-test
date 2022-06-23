@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-test-app
+  namespace: nadund-test
+  labels:
+    app: python-test
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-test
+  template:
+    metadata:
+      labels:
+        app: python-test
+    spec:
+      containers:
+      - name: python-svc
+        image: nadunrds/python-test:latest
+        ports:
+        - containerPort: 8080
