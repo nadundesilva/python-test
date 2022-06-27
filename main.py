@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import http.client
 import json
 import requests
+import httpx
 
 app = FastAPI()
 
@@ -20,5 +21,18 @@ async def getUsingHttpClient():
 @app.get("/requests")
 async def getUsingRequests():
     resp = requests.get("https://postman-echo.com/get?foo1=bar1&foo2=bar2")
+    print(resp)
+    return {"clientType": "requests", "statusCode": resp.status_code, "body": json.loads(resp.text)}
+
+@app.get("/httpx")
+async def getUsingRequests():
+    resp = httpx.get("https://postman-echo.com/get?foo1=bar1&foo2=bar2")
+    print(resp)
+    return {"clientType": "requests", "statusCode": resp.status_code, "body": json.loads(resp.text)}
+
+@app.get("/httpx/2")
+async def getUsingRequests():
+    client = httpx.AsyncClient(http2=True)
+    resp = await client.get("https://postman-echo.com/get?foo1=bar1&foo2=bar2")
     print(resp)
     return {"clientType": "requests", "statusCode": resp.status_code, "body": json.loads(resp.text)}

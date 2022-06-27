@@ -3,6 +3,7 @@ FROM python:3.9.13
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt && \
     pip install requests && \
+    pip install httpx httpx[http2] && \
     rm requirements.txt
 
 COPY main.py main.py
